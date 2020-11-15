@@ -30,3 +30,6 @@ def schemas(request):
 
 def new_schema(request):
     return render(request, 'new_schema.html')
+
+def edit_schema(request):
+    return render(request, 'edit_schema.html')

@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from generator.views import login, schemas, new_schema
+from generator.views import login, schemas, new_schema, edit_schema
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login, name='login'),
     path('schemas/', schemas, name='schemas'),
-    path('schemas/new_schema', new_schema, name='new_schema')
+    path('schemas/new_schema', new_schema, name='new_schema'),
+    path('schemas/edit_schema', edit_schema, name='edit_schema')
 ]
