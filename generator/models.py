@@ -2,10 +2,6 @@ from django.db import models
 from datetime import datetime
 
 
-class User(models.Model):
-    email = models.CharField(max_length=30, verbose_name='Email пользователя')
-    password = models.CharField(max_length=30, verbose_name='Пароль пользователя', default='None')
-
 class NewSchema(models.Model):
     schema_name = models.CharField(max_length=30, verbose_name='Schema name', unique=True)
     column_separator = models.CharField(max_length=30, verbose_name='Column separator')
@@ -30,6 +26,5 @@ class ColumnNewSchema(models.Model):
     order = models.CharField(max_length=10, verbose_name='Order')
 
 class DataSchemas(models.Model):
-    user_id = models.ForeignKey(User, to_field="id", on_delete=models.CASCADE)
     name = models.ForeignKey(NewSchema, to_field="schema_name", on_delete=models.CASCADE)
     date = models.DateTimeField(default=datetime.now, blank=True)
