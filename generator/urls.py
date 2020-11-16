@@ -1,25 +1,12 @@
-"""generator URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.10/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
-from generator.views import login, schemas, new_schema, edit_schema
+from django.urls import path, include
+from generator.views import home, schemas, new_schema, edit_schema, signup
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', login, name='login'),
+    path('', home, name='home'),
+    path('signup/', signup, name='signup'),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('schemas/', schemas, name='schemas'),
     path('schemas/new_schema', new_schema, name='new_schema'),
     path('schemas/edit_schema', edit_schema, name='edit_schema')
