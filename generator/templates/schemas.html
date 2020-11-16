@@ -1,37 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-  <title>Schemas</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-
+{% block content %}
 <div class="container">
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">FakeCSV</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Schemas</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a>Hello, username!</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </nav>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+    <h3 class="col-md-4">Data schemas</h3>
+    <button type="button" class="btn btn-success col-md-2"><a href="{% url 'new_schema' %}" style="text-decoration: none; color: white">New schema</a></button>
+  </div>
   <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Title</th>
+        <th scope="col">Modified</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -46,5 +27,6 @@
     </tbody>
   </table>
 </div>
+{% endblock %}
 
-</html>
+
