@@ -1,84 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <title>New Schema</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-    <div class="container">
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <a class="navbar-brand" href="#">FakeCSV</a>
-              </div>
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Schemas</a></li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li><a>Hello, username!</a></li>  
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-              </ul>
-            </div>
-        </nav>
-        <form>
-            <div style="display: flex; justify-content: space-between;">
-                <h3>New schema</h3>
-                <button type="submit" class="btn btn-primary col-md-2" style="margin-top: 10px;">Submit</button>
-            </div>
-            <div class="form-row">
-                <div class="form-group" style="width: 500px;">
-                    <label for="exampleFormControlInput1">Name</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                    <label for="exampleFormControlSelect1">Column separator</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Comma(.)</option>
-                        <option>Semicolon(;)</option>
-                        <option>Colon(:)</option>
-                        <option>Dash(-)</option>
-                    </select>
-                    <label for="exampleFormControlSelect1">String character</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Double-quote(")</option>
-                        <option>One-quote(')</option>
-                    </select>
-                </div>
-            </div>
-            <h3>Schema columns</h3>
-            <div class="form-row">
-                <div class="form-group col-md-5" style="padding-left: 0;">
-                  <label for="inputColumn">Column name</label>
-                  <input type="text" class="form-control" id="inputColumn">
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="inputType">Type</label>
-                  <select id="inputType" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>Full name</option>
-                    <option>Email</option>
-                    <option>Domain name</option>
-                    <option>Phone number</option>
-                    <option>Integer</option>
-                    <option>Company name</option>
-                    <option>Text</option>
-                    <option>Address</option>
-                    <option>Date</option>
-                  </select>
-                </div>
-                <div class="form-group col-md-2">
-                  <label for="inputOrder">Order</label>
-                  <input type="text" class="form-control" id="inputOrder">
-                </div>
-                <h4 class="form-group col-md-2" style="padding-top:20px">Delete</h4>
-            </div>
-            <button type="button" class="btn btn-primary btn-lg btn-block">Add column</button>
-        </form>
+{% block content %}
+<div class="container">
+  <form>
+    <div style="display: flex; justify-content: space-between;">
+      <h3>New schema</h3>
+      <button type="submit" class="btn btn-primary col-md-2" style="margin-top: 10px;">Submit</button>
     </div>
-</body>
-
-</html>
+    <div class="form-row">
+      <div class="form-group" style="width: 500px;">
+          <label for="exampleFormControlInput1">Name</label>
+          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+          <label for="exampleFormControlSelect1">Column separator</label>
+          <select class="form-control" id="exampleFormControlSelect1">
+              <option>Comma(.)</option>
+              <option>Semicolon(;)</option>
+              <option>Colon(:)</option>
+              <option>Dash(-)</option>
+          </select>
+          <label for="exampleFormControlSelect1">String character</label>
+          <select class="form-control" id="exampleFormControlSelect1">
+              <option>Double-quote(")</option>
+              <option>One-quote(')</option>
+          </select>
+      </div>
+    </div>
+    <h3>Schema columns</h3>
+    <div class="form-row">
+      <div class="form-group col-md-5" style="padding-left: 0;">
+        <label for="inputColumn">Column name</label>
+        <input type="text" class="form-control" id="inputColumn">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputType">Type</label>
+        <select id="inputType" class="form-control">
+          <option selected>Choose...</option>
+          <option>Full name</option>
+          <option>Email</option>
+          <option>Domain name</option>
+          <option>Phone number</option>
+          <option>Integer</option>
+          <option>Company name</option>
+          <option>Text</option>
+          <option>Address</option>
+          <option>Date</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputOrder">Order</label>
+        <input type="text" class="form-control" id="inputOrder">
+      </div>
+      <h4 class="form-group col-md-2" style="padding-top:35px">Delete</h4>
+    </div>
+    <button type="button" class="btn btn-primary btn-md">Add column</button>
+  </form>
+</div>
+{% endblock %}
