@@ -1,6 +1,9 @@
 from django import forms
-from .models import User
 
-class LoginForm(forms.Form):
-    email = forms.EmailField(max_length=256, help_text='Это поле обязательно')
-    password = forms.CharField(label='Enter password', widget=forms.PasswordInput)
+class NewSchemaForm(forms.Form):
+    schema_name = forms.CharField(max_length=150)
+    column_separator = forms.CharField(max_length=150)
+    string_character = forms.CharField(max_length=150)
+    column_name = forms.CharField(max_length=150)
+    column_type = forms.CharField(max_length=150)
+    column_order = forms.CharField(max_length=150)
