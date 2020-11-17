@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
@@ -8,68 +9,46 @@
       <h3>New schema</h3>
       <button type="submit" class="btn btn-primary col-md-2" style="margin-top: 10px;">Submit</button>
     </div>
-    <div class="form-row">
-      <div class="form-group"  style="width: 500px;">
-          <label for="column_name">Name</label>
-          <input type="text" class="form-control" id="column_name" placeholder="MySchema or New Schema" name="schema_name">
-          <label for="column_separator">Column separator</label>
-          <select class="form-control" name="column_separator" id="column_separator">
-              <option value=".">Comma(.)</option>
-              <option value=";">Semicolon(;)</option>
-              <option value=":">Colon(:)</option>
-              <option value="-">Dash(-)</option>
-          </select>
-          <label for="string_character">String character</label>
-          <select class="form-control" name="string_character" id="string_character">
-              <option value='"'>Double-quote(")</option>
-              <option value="'">One-quote(')</option>
-          </select>
-      </div>
-    </div>
-    <div style="display: flex; justify-content: space-between;">
-      <h3>Schema columns</h3>
-      <button type="button" class="btn btn-success col-md-2" value="Add another line" onclick="Clone()">Add column</button>
-    </div>
-    <div class="form-row" id="welcomeDiv" style="align-items: center;">
-      <div class="form-group col-md-5" style="padding-left: 0;">
-        <label for="column_name">Column name</label>
-        <input type="text" class="form-control" id="column_name" name="column_name">
-      </div>
-      <div class="form-group col-md-3" name="type">
-        <label for="column_type">Type</label>
-        <select name="column_type" id="column_type" class="form-control">
-          <option selected>Choose...</option>
-          <option value="Full name">Full name</option>
-          <option value="Email">Email</option>
-          <option value="Domain name">Domain name</option>
-          <option value="Phone number">Phone number</option>
-          <option value="Integer">Integer</option>
-          <option value="Company name">Company name</option>
-          <option value="Text">Text</option>
-          <option value="Address">Address</option>
-          <option value="Date">Date</option>
-        </select>
-      </div>
-      <div class="form-group col-md-2" name="order">
-        <label for="inputOrder">Order</label>
-        <input type="text" class="form-control" id="inputOrder"  name="column_order">
-      </div>
-      <button class="btn btn-primary col-md-2" value="Delete Row" style="height: 40px;  margin-top: 12px" name="delete" onclick="Delete(this)">Delete</button>
-    </div>
+    {{ form.as_p}}
+    <h3>Schema columns</h3>
+    <table class="table form-table table-bordered table-sm">
+      <thead class="text-center">
+        <tr>
+            <th>Column name</th>
+            <th>Type</th>
+            <th>Order</th>
+            <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for form_data in formset %}
+        <tr class="item">
+          <td>
+              {{ form_data.column_name }}
+          </td>
+          <td>
+              {{ form_data.column_type }}
+          </td>
+          <td>
+            {{ form_data.column_order }}
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger btn-sm remove-form-row" id="{{ formset.prefix }}">Delete</button>
+          </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="9" style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
+            <button type="button" class="btn btn-sm btn-success add-form-row" id="{{ formset.prefix }}">Add</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    {{ formset.management_form }}
   </form>
 </div>
-<script>
-function Clone()
-    {
-		var clone = document.getElementById('welcomeDiv').cloneNode(true);
-		document.getElementById("container").appendChild(clone);
-	}
-	
-	function Delete(button)
-    {
-		var parent = button.parentNode;
-		var grand_father = parent.parentNode;
-		grand_father.removeChild(parent);
-	}
-</script>
+<script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.js'%}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'js/formset.js' %}"></script>
 {% endblock %}
