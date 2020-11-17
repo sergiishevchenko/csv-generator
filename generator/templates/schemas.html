@@ -4,7 +4,7 @@
 <div class="container">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
     <h3 class="col-md-4">Data schemas</h3>
-    <button type="button" class="btn btn-success col-md-2"><a href="{% url 'new_schema' %}" style="text-decoration: none; color: white">New schema</a></button>
+    <button type="button" class="btn btn-success col-md-1.5"><a href="{% url 'new_schema' %}" style="text-decoration: none; color: white">New schema</a></button>
   </div>
   <table class="table">
     <thead>
@@ -19,9 +19,9 @@
       {% for item in data_schemas %}
       <tr>
         <th scope="row">{{ item.id }}</th>
-        <td><a href="{% url 'new_schema' %}">{{ item.name }}</a></td>
+        <td>{{ item.schema_name }}</td>
         <td>{{ item.date }}</td>
-        <td>Edit scheme  Delete</td>
+        <td><button type="button" class="btn btn-success col-md-4" style="margin-right: 10px"><a href="{% url 'edit_schema' %}" style="text-decoration: none; color: white;">Edit scheme</a></button><button type="button" class="btn btn-danger col-md-3"><a href="{% url 'del_schema' item.id %}" style="text-decoration: none; color: white">Delete</a></button></td>
       </tr>
       {% endfor %}
     </tbody>
