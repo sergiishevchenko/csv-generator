@@ -36,12 +36,11 @@ def new_schema(request):
                     new_schema = save_form.save(commit=False)
                     new_schema.user_id = request.user.id
                     new_schema.save()
-
                     for mark in formset:
                         data = mark.save(commit=False)
                         data.new_schema = new_schema
+                        data.set_schema = save_form['schema_name'].value()
                         data.save()
-
             except IntegrityError:
                 print("Error Encountered")
             return redirect('schemas')
@@ -54,8 +53,8 @@ def edit_schema(request):
     return render(request, 'edit_schema.html')
 
 def del_schema(request, id):
+    data_schemas = NewSchema.objects.filter(id=id)
+    del_sets = SetSchema.objects.filter(set_schema=data_schemas[0].schema_name).delete()
     NewSchema.objects.filter(id=id).delete()
-    user_id = request.user.id
-    data_schemas = NewSchema.objects.filter(user_id=user_id)
-    params = {'data_schemas': data_schemas}
+    params = {'data_schemas': data_schemas, 'del_sets': del_sets}
     return render(request, 'schemas.html', params)
