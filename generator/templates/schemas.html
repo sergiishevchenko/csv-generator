@@ -21,7 +21,7 @@
         <th scope="row">{{ item.id }}</th>
         <td>{{ item.schema_name }}</td>
         <td>{{ item.date }}</td>
-        <td><button type="button" class="btn btn-success col-md-4" style="margin-right: 10px"><a href="{% url 'edit_schema' %}" style="text-decoration: none; color: white;">Edit scheme</a></button><button type="button" class="btn btn-danger col-md-3"><a href="{% url 'del_schema' item.id %}" style="text-decoration: none; color: white">Delete</a></button></td>
+        <td><button type="button" class="btn btn-success col-md-4" style="margin-right: 10px"><a href="{% url 'edit_schema'  item.schema_name %}" style="text-decoration: none; color: white;">Edit scheme</a></button><button type="button" class="btn btn-danger col-md-3"><a href="{% url 'del_schema' item.id %}" style="text-decoration: none; color: white">Delete</a></button></td>
       </tr>
       {% endfor %}
     </tbody>
