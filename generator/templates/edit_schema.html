@@ -2,16 +2,17 @@
 
 {% block content %}
 <div class="container">
-  <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-    <h3 class="col-md-4">Data sets</h3>
-    <div class="col-md-5" style="display: flex; justify-content: flex-end;">
+  <form method="POST" action="{% url 'generate_data' schema_name id %}">
+    {% csrf_token %}
+    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+      <h3 class="col-md-7" style="padding-top: 5px;">Data sets</h3>
+      <div class="col-md-5" style="display: flex; justify-content: flex-end;">
         <h5 style="padding-top: 15px; margin-right: 15px;">Rows:</h5>
-        <input type="text" class="col-md-2" id="inputRows" style="margin-top: 10px; margin-right: 15px;">
-        <button type="submit" class="btn btn-success col-md-4" style="margin-top: 10px;">
-          <a href="{% url 'generate_data' %}" style="text-decoration: none; color: white;">Generate data</a>
-        </button>
+        <input type="text" class="col-md-2" id="inputRows" name="inputRows" style="margin-top: 10px; margin-right: 15px;">
+        <button type="submit" class="btn btn-success col-md-4" style="margin-top: 10px;">Generate data</button>
+      </div>
     </div>
-  </div>
+  </form>
   <table class="table">
     <thead>
       <tr>
@@ -27,7 +28,7 @@
         <th scope="row">{{ item.id }}</th>
         <td>{{ item.data }}</td>
         <td>Status</td>
-        <td><a href="{% url 'new_schema' %}" style="text-decoration: none">Download</a></td>
+        <td><a href="{% url 'download' name=item.name_csv %}" style="text-decoration: none">Download</a></td>
       </tr>
       {% endfor %}
     </tbody>
