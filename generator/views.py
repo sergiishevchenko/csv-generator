@@ -6,6 +6,7 @@ from django.forms import modelformset_factory
 from django.db import transaction, IntegrityError
 from datetime import datetime
 import csv
+from django.http import FileResponse, HttpResponse
 
 def home(request):
     return render(request, 'home.html')
@@ -67,22 +68,53 @@ def edit_schema(request, schema_name):
     new_schema_head = list(NewSchema.objects.filter(schema_name=schema_name).values('column_separator')[0].values())
     delimiter = new_schema_head[0]
     filename = schema_name + '_list.csv'
-    with open(filename, 'w', newline='') as file:
+    with open('csv_files/' + filename, 'w', newline='') as file:
         writer = csv.writer(file, delimiter=delimiter)
         writer.writerows(row_list)
+        csv_names = list(Sets.objects.filter(schema_name=schema_name).all().values_list('name_csv', flat=True))
+        if filename not in csv_names:
+            new_set = Sets()
+            new_set.schema_name = schema_name
+            new_set.date = datetime.now().strftime("%m/%d/%Y-%H:%M:%S")
+            new_set.name_csv = filename
+            new_set.save()
 
-    params = {'sets_schema': sets_schema}
+    id_schema = NewSchema.objects.filter(schema_name=schema_name).values('id')[0]['id']
+    params = {'sets_schema': sets_schema, 'id': id_schema, 'schema_name': schema_name}
     return render(request, 'edit_schema.html', params)
 
-def generate_data(request):
-    print(1)
-    sets_schema = Sets.objects.all()
-    params = {'sets_schema': sets_schema}
+def generate_data(request, schema_name, id):
+    input_file = schema_name + '_list.csv'
+    with open('csv_files/' + input_file, newline='') as File:
+        reader = csv.reader(File)
+        count_rows = list(reader)
+        rows = 2
+        result = count_rows[:rows]
+        output_file = str(rows) + '_' + schema_name + '_out.csv'
+        with open('csv_files/' + output_file, 'w', newline='') as file:
+            for row in result:
+                file.write(row[0] + '\n')
+        csv_names = list(Sets.objects.filter(schema_name=schema_name).all().values_list('name_csv', flat=True))
+        if output_file not in csv_names:
+            new_set = Sets()
+            new_set.schema_name = schema_name
+            new_set.date = datetime.now().strftime("%m/%d/%Y-%H:%M:%S")
+            new_set.name_csv = output_file
+            new_set.save()
+
+    sets_schema = Sets.objects.filter(schema_name=schema_name)
+    id_schema = NewSchema.objects.filter(schema_name=schema_name).values('id')[0]['id']
+    params = {'sets_schema': sets_schema, 'id': id_schema, 'schema_name': schema_name}
     return render(request, 'edit_schema.html', params)
 
 def download(request):
+    filename = "papapam_list.csv"
+    with open('csv_files/' + filename, 'rb') as f:
+        response = HttpResponse(f.read(), content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename=' + filename
+        response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-16'
+        return response
 
-    return redirect('edit_schema')
 
 def del_schema(request, id):
     data_schemas = NewSchema.objects.filter(id=id)
