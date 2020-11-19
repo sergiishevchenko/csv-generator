@@ -46,11 +46,11 @@ def new_schema(request):
                         data.set_schema = save_form['schema_name'].value()
                         data.save()
 
-                    sets = Sets()
-                    sets.schema_name = save_form['schema_name'].value()
-                    # sets.date -> str
-                    sets.date = datetime.now().strftime("%m/%d/%Y-%H:%M:%S")
-                    sets.save()
+                    # sets = Sets()
+                    # sets.schema_name = save_form['schema_name'].value()
+                    # # sets.date -> str
+                    # sets.date = datetime.now().strftime("%m/%d/%Y-%H:%M:%S")
+                    # sets.save()
             except IntegrityError:
                 print("Error Encountered")
             return redirect('schemas')
@@ -64,7 +64,6 @@ def edit_schema(request, schema_name):
     row_list = []
     for item in list(SetSchema.objects.filter(set_schema=schema_name).values('column_name', 'column_type', 'column_order')):
         row_list.append(list(item.values()))
-
     new_schema_head = list(NewSchema.objects.filter(schema_name=schema_name).values('column_separator')[0].values())
     delimiter = new_schema_head[0]
     filename = schema_name + '_list.csv'
@@ -78,7 +77,6 @@ def edit_schema(request, schema_name):
             new_set.date = datetime.now().strftime("%m/%d/%Y-%H:%M:%S")
             new_set.name_csv = filename
             new_set.save()
-
     id_schema = NewSchema.objects.filter(schema_name=schema_name).values('id')[0]['id']
     params = {'sets_schema': sets_schema, 'id': id_schema, 'schema_name': schema_name}
     return render(request, 'edit_schema.html', params)
@@ -88,7 +86,7 @@ def generate_data(request, schema_name, id):
     with open('csv_files/' + input_file, newline='') as File:
         reader = csv.reader(File)
         count_rows = list(reader)
-        rows = 2
+        rows = int(request.POST.get('inputRows'))
         result = count_rows[:rows]
         output_file = str(rows) + '_' + schema_name + '_out.csv'
         with open('csv_files/' + output_file, 'w', newline='') as file:
@@ -101,23 +99,21 @@ def generate_data(request, schema_name, id):
             new_set.date = datetime.now().strftime("%m/%d/%Y-%H:%M:%S")
             new_set.name_csv = output_file
             new_set.save()
-
     sets_schema = Sets.objects.filter(schema_name=schema_name)
     id_schema = NewSchema.objects.filter(schema_name=schema_name).values('id')[0]['id']
     params = {'sets_schema': sets_schema, 'id': id_schema, 'schema_name': schema_name}
     return render(request, 'edit_schema.html', params)
 
-def download(request):
-    filename = "papapam_list.csv"
-    with open('csv_files/' + filename, 'rb') as f:
+def download(request, name):
+    with open('csv_files/' + name, 'rb') as f:
         response = HttpResponse(f.read(), content_type='application/vnd.ms-excel')
-        response['Content-Disposition'] = 'attachment; filename=' + filename
+        response['Content-Disposition'] = 'attachment; filename=' + name
         response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-16'
         return response
 
-
 def del_schema(request, id):
     data_schemas = NewSchema.objects.filter(id=id)
-    del_sets = SetSchema.objects.filter(set_schema=data_schemas[0].schema_name).delete()
+    SetSchema.objects.filter(set_schema=data_schemas[0].schema_name).delete()
+    Sets.objects.filter(schema_name=data_schemas[0].schema_name).delete()
     NewSchema.objects.filter(id=id).delete()
     return redirect('schemas')
