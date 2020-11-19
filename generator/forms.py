@@ -32,3 +32,6 @@ class SetSchemaForm(forms.ModelForm):
             'column_type': forms.TextInput(attrs={'class': 'formset-field'}),
             'column_order': forms.TextInput(attrs={'class': 'formset-field'})
         }
+
+class Rows(forms.Form):
+    rows = forms.CharField(max_length=150)
