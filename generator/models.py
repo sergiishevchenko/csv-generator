@@ -41,6 +41,7 @@ class SetSchema(models.Model):
 class Sets(models.Model):
     schema_name = models.CharField(max_length=30, verbose_name='Schema name', default=True)
     data = models.CharField(max_length=100, default=datetime.now().strftime("%m/%d/%Y-%H:%M:%S"), blank=True)
+    name_csv = models.CharField(max_length=30, verbose_name='Name csv-file', default=True)
 
     def __str__(self):
         return self.schema_name
