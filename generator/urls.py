@@ -12,5 +12,5 @@ urlpatterns = [
     path('schemas/edit_schema/<schema_name>', edit_schema, name='edit_schema'),
     path('schemas/<id>', del_schema, name='del_schema'),
     path('schemas/edit_schema/<schema_name>/<id>', generate_data, name='generate_data'),
-    path('schemas/edit_schema/', download, name='download')
+    path('downloads/<name>', download, name='download')
 ]
