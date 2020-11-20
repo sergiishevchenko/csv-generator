@@ -15,3 +15,5 @@ python3 manage.py migrate
 python manage.py createsuperuser
 python3 manage.py runserver
 ```
+
+Deployed project you can find here - https://csv-generator-test.herokuapp.com/
